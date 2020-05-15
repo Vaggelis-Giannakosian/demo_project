@@ -4,6 +4,7 @@
 namespace App\Services\Requests;
 
 
+use App\Contracts\ApiRequestContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;

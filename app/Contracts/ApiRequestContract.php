@@ -1,9 +1,7 @@
 <?php
 
 
-namespace App\Services\Requests;
-
-use Illuminate\Support\Collection;
+namespace App\Contracts;
 
 
 interface ApiRequestContract
