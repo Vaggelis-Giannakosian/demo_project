@@ -12,7 +12,7 @@ class FormController extends Controller
 
     public function index(NasdaqApiRequest $nasdaqApiRequest)
     {
-        $companySymbols = $nasdaqApiRequest->get();
+        $companySymbols = $nasdaqApiRequest->get()->symbolsArray();
         return view('index',compact('companySymbols'));
     }
 

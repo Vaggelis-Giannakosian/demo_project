@@ -9,6 +9,6 @@ use Illuminate\Support\Collection;
 interface ApiRequestContract
 {
 
-    public function get() : Collection;
+    public function get();
 
 }

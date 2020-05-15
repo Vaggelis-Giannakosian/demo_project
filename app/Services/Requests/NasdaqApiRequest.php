@@ -15,24 +15,36 @@ class NasdaqApiRequest implements ApiRequestContract
     private $url = 'https://pkgstore.datahub.io/core/nasdaq-listings/nasdaq-listed_json/data/a5bc7580d6176d60ac0b2142ca8d7df6/nasdaq-listed_json.json';
     private $cache;
     private $http;
+    private $apiResponse;
 
     public function __construct(Cache $cache, Http $http)
     {
         $this->cache = $cache;
         $this->http = $http;
+        $this->apiResponse = [];
     }
 
-    public function get(): Collection
+    public function get(): self
     {
 
         if ($this->cache::has('company_symbols')) {
-            $companySymbols = $this->cache::get('company_symbols');
+            $this->apiResponse = $this->cache::get('company_symbols');
         } else {
-            $companyApiResponse = $this->http::get($this->url)->json();
-            $companySymbols = collect($companyApiResponse)->unique('Symbol')->pluck('Symbol');
-            $this->cache::put('company_symbols', $companySymbols, 600);
+            $this->apiResponse = $this->http::get($this->url)->json();
+            $this->cache::put('company_symbols',  $this->apiResponse, 600);
         }
 
-        return $companySymbols;
+        return $this;
+    }
+
+
+    public function symbolsArray(): Collection
+    {
+        return collect( $this->apiResponse)->unique('Symbol')->pluck('Symbol');
+    }
+
+    public function companiesArray() : Collection
+    {
+        return collect( $this->apiResponse)->unique('Symbol')->pluck('Company Name','Symbol');
     }
 }
