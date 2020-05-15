@@ -74,7 +74,7 @@
         </h2>
 
             <div class="col-sm-12">
-                <form action="{{ route('store') }}" method="POST" class="form_validate">
+                <form action="{{ route('store') }}" method="POST" class="form_validate" autocomplete="off">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -128,20 +128,39 @@
 <script>
 
 $(document).ready(function () {
+
+    $('.select2').select2();
+
+
     $('.datepicker').datepicker({
-        startDate: '0d',
+        endDate: '+0d',
         todayHighlight:true,
         orientation: 'bottom',
         format:'yyyy-mm-dd',
     });
-    $('.select2').select2();
+
+    $('#s_date').on('changeDate',(selected)=>{
+        const currentDate = new Date(selected.date.valueOf());
+        const endDateInput =  $('#e_date');
+
+
+        if(endDateInput.val()) {
+            const eDate = new Date(endDateInput.val());
+            if(eDate.getTime() < currentDate.getTime())
+            {
+                console.log('inside')
+                endDateInput.datepicker("update", currentDate);
+            }
+        }
+
+        endDateInput.datepicker('setStartDate', currentDate);
+
+    });
+
 
     $('.form_validate').validate({
-        debug: true,
         errorPlacement: function(error, element) {
-            var placement = $(element).data('error');
             element.closest('.form-group').append(error)
-            // error.insertAfter();
         }
     });
 });
