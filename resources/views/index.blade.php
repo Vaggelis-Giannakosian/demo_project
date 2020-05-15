@@ -28,7 +28,7 @@
                                     id="company_symbol">
                                 <option selected disabled value="">Choose one of the Symbols</option>
                                 @foreach($companySymbols as $symbol)
-                                    <option value="{{ $symbol }}">{{$symbol}}</option>
+                                    <option @if(old('company_symbol')===$symbol) selected @endif value="{{ $symbol }}">{{$symbol}}</option>
                                 @endforeach
                             </select>
                             <x-errors type="company_symbol"/>
