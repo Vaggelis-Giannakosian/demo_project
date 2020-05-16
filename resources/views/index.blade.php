@@ -16,7 +16,14 @@
                 XM DEMO
             </h2>
 
-            <div class="col-sm-12">
+
+
+            <div class="col-sm-10 m-auto">
+
+                <h3 class="mb-3">
+                    Check the historical quotes of a Company over a specified period of time
+                </h3>
+
                 <form action="{{ route('store') }}" method="POST" class="form_validate" autocomplete="off">
                     @csrf
                     <div class="form-row">

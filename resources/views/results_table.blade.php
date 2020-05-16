@@ -14,7 +14,7 @@
         <div class="col-sm-10 m-auto">
 
             <h2 class="text-center  mb-5 mt-5 ">
-                Historical quotes for {{ $formData['company'] }} (Symbol {{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
+                Historical quotes of {{ $formData['company'] }} ({{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
             </h2>
 
 
@@ -69,7 +69,7 @@
             </table>
 
             <h2 class="text-center m-5">
-                Open and Close prices for the same period
+                Open and Close prices chart for the same period
             </h2>
 
             <div id="stock_div" class="w-100 mt-5" style="height: 400px;"></div><br>
