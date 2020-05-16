@@ -37,7 +37,7 @@ class FormControllerTest extends TestCase
         $response->assertSessionDoesntHaveErrors(['company_symbol','email','start_date','end_date']);
     }
 
-    public function test_search_fields_invalid_end_date_greater_than_start_date_or_dates_greater_than_today()
+    public function test_search_fields_invalid_end_date_greater_than_start_date()
     {
 
         $params = ['company_symbol'=>'GOOD','email'=>$this->faker->email,'start_date'=>$this->today(),'end_date'=>$this->yesterday()];
@@ -50,6 +50,10 @@ class FormControllerTest extends TestCase
         $this->assertEquals($messages['start_date'][0],'The start date must be a date before or equal to end date.' );
         $this->assertEquals($messages['end_date'][0],'The end date must be a date after or equal to start date.' );
 
+    }
+
+    public function test_search_fields_invalid_dates_greater_than_today()
+    {
 
         $params = ['company_symbol'=>'GOOD','email'=>$this->faker->email,'start_date'=>$this->tomorrow(),'end_date'=>$this->tomorrow()];
         $response = $this->post(route('store'),$params);
