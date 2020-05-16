@@ -38,7 +38,15 @@ class HistoryApiRequest implements ApiRequestContract
 
     public function getGraphData () : array
     {
-        return [];
+        $graphData = [];
+        collect($this->apiResponse['prices'])->each(function($row) use (&$graphData){
+            if(!isset($row['type']))
+            {
+                $graphData [] = [$row['date']*1000, (float)$row['open'], (float)$row['close']];
+            }
+        });
+
+        return array_reverse($graphData);
     }
 
     public function prepare(array $params) : self
