@@ -44,8 +44,9 @@ class NasdaqApiRequest implements ApiRequestContract
         return collect( $this->apiResponse)->unique('Symbol')->pluck('Symbol');
     }
 
-    public function companiesArray() : Collection
+    public function companyNameBySymbol(?string $symbol) : ?string
     {
-        return collect( $this->apiResponse)->unique('Symbol')->pluck('Company Name','Symbol');
+        $companiesNames = collect( $this->apiResponse)->unique('Symbol')->pluck('Security Name','Symbol')->toArray();
+            return $companiesNames[$symbol] ?? null;
     }
 }

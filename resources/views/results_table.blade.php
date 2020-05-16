@@ -10,15 +10,13 @@
 @section('content')
     <div class="row">
 
-        <h2 class="text-center w-100 mb-5 mt-5">
-            Historical quotes for Symbol {{$formData['company_symbol']}} for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
-        </h2>
 
         <div class="col-sm-10 m-auto">
 
-            <div class="text-left mb-5 text-center">
-                <a href="{{ route('index') }}" class="btn btn-primary">Try again with different settings</a>
-            </div>
+            <h2 class="text-center  mb-5 mt-5 ">
+                Historical quotes for {{ $company }} (Symbol {{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
+            </h2>
+
 
             <table id="results" class="table table-striped table-bordered w-100">
                 <thead>
@@ -79,6 +77,13 @@
                 <button id="linear">Linear Scale</button>&nbsp;
                 <button id="log" disabled="true">Log Scale</button>
             </div>
+
+
+            <div class="text-left mb-5 text-center">
+                <a href="{{ route('index') }}" class="btn btn-primary">Try again with different settings</a>
+            </div>
+
+
         </div>
 
     </div>

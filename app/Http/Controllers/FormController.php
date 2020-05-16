@@ -17,7 +17,7 @@ class FormController extends Controller
         return view('index',compact('companySymbols'));
     }
 
-    public function store(DemoFormRequest $request, HistoryApiRequest $historyApiRequest)
+    public function store(DemoFormRequest $request, HistoryApiRequest $historyApiRequest,NasdaqApiRequest $nasdaqApiRequest)
     {
         $validatedData = $request->validated();
 
@@ -25,12 +25,15 @@ class FormController extends Controller
         $historyApiRequest->prepare($validatedData)->get();
 
 
+        $companyName = $nasdaqApiRequest->get()->companyNameBySymbol($validatedData['company_symbol']);
+
 
         // return view
         return view('results_table',[
             'tableData'=>$historyApiRequest->getTableData(),
             'openClosedPricesGraphData'=>$historyApiRequest->getGraphData(),
-            'formData' => $validatedData
+            'formData' => $validatedData,
+            'company' =>$companyName
         ]);
         //send Mail
     }
