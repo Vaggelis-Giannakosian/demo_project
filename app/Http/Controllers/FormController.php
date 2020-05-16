@@ -20,19 +20,17 @@ class FormController extends Controller
 
     public function store(DemoFormRequest $request, HistoryApiRequest $historyApiRequest,NasdaqApiRequest $nasdaqApiRequest)
     {
+        //get validated data
         $validatedData = $request->validated();
 
-        //get Api Data
+        //make Api Request
         $historyApiRequest->prepare($validatedData)->get();
-
 
         //get company name for symbol
         $validatedData['company'] = $nasdaqApiRequest->get()->companyNameBySymbol($validatedData['company_symbol']);
 
-
         //dispatch event
         event( new SearchSubmitted($validatedData) );
-
 
         // return view
         return view('results_table',[
@@ -40,7 +38,6 @@ class FormController extends Controller
             'openClosedPricesGraphData'=>$historyApiRequest->getGraphData(),
             'formData' => $validatedData
         ]);
-
     }
 
 }

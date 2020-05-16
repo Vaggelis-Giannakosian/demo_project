@@ -31,7 +31,7 @@ class SearchSubmittedEmail extends Mailable
     {
         return $this
             ->to($this->data['email'])
-            ->from('info@xmdemo_test.gr')
+            ->from('info@xmdemo.gr')
             ->subject($this->data['company'])
             ->view('emails.submitted');
     }
