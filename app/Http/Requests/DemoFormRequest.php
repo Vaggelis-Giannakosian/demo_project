@@ -28,8 +28,8 @@ class DemoFormRequest extends FormRequest
         return [
             'company_symbol'=>'required|in:'.$validSymbols,
             'email'=> 'required|email',
-            'start_date'=> 'bail|date|date_format:Y-m-d|before_or_equal:today|before_or_equal:end_date',
-            'end_date' => 'bail|date|date_format:Y-m-d|after_or_equal:start_date|before_or_equal:today',
+            'start_date'=> 'bail|required|date|date_format:Y-m-d|before_or_equal:today|before_or_equal:end_date',
+            'end_date' => 'bail|required|date|date_format:Y-m-d|after_or_equal:start_date|before_or_equal:today',
         ];
     }
 }

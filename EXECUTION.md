@@ -9,5 +9,5 @@
 
 - execute: php artisan serve
 
-##Execute test
+##Run tests
 - execute: vendor/bin/phpunit
