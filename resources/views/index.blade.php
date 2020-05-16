@@ -13,7 +13,7 @@
         <div class="row">
 
             <h2 class="text-center w-100 mb-5">
-                XS DEMO
+                XM DEMO
             </h2>
 
             <div class="col-sm-12">

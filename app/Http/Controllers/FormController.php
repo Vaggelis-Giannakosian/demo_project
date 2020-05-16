@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\DemoFormRequest;
+use App\Services\Requests\HistoryApiRequest;
 use App\Services\Requests\NasdaqApiRequest;
 
 class FormController extends Controller
@@ -16,10 +17,22 @@ class FormController extends Controller
         return view('index',compact('companySymbols'));
     }
 
-    public function store(DemoFormRequest $request)
+    public function store(DemoFormRequest $request, HistoryApiRequest $historyApiRequest)
     {
         $validatedData = $request->validated();
-        dd($validatedData);
+
+        //get Api Data
+        $historyApiRequest->prepare($validatedData)->get();
+
+
+
+        // return view
+        return view('results_table',[
+            'tableData'=>$historyApiRequest->getTableData(),
+            'openClosedPricesGraphData'=>$historyApiRequest->getGraphData(),
+            'formData' => $validatedData
+        ]);
+        //send Mail
     }
 
 }

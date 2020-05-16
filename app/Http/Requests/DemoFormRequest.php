@@ -26,8 +26,8 @@ class DemoFormRequest extends FormRequest
         return [
             'company_symbol'=>'required',
             'email'=> 'required|email',
-            'start_date'=> 'bail|date|date_format:Y-m-d|before:today',
-            'end_date' => 'bail|date|date_format:Y-m-d|after_or_equal:start_date|before:today',
+            'start_date'=> 'bail|date|date_format:Y-m-d|before_or_equal:today',
+            'end_date' => 'bail|date|date_format:Y-m-d|after_or_equal:start_date|before_or_equal:today',
         ];
     }
 }

@@ -4,24 +4,70 @@
 namespace App\Services\Requests;
 
 
+use App\Adapters\DateToTimeAdapter;
 use App\Contracts\ApiRequestContract;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 
 class HistoryApiRequest implements ApiRequestContract
 {
     private $apiKey = 'ca36972eeamshff71fe5a5fd18fbp1e0659jsnaf99340b1541';
-
+    private $host = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
+    private $url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-historical-data?';
+    private $apiResponse;
     private $queryString;
+    private $http;
+    private $headers;
 
-    public function __construct(string $queryString)
+    public function __construct( HTTP $http)
     {
-        $this->queryString = $queryString;
+        $this->http = $http;
     }
 
 
-
-    public function get(): Collection
+    public function get(): ApiRequestContract
     {
-        // TODO: Implement get() method.
+        $this->apiResponse = collect($this->http::withHeaders($this->headers)->get($this->url.$this->queryString)->json());
+        return $this;
+    }
+
+    public function getTableData() : array
+    {
+        return $this->apiResponse['prices'] ?? [];
+    }
+
+    public function getGraphData () : array
+    {
+        return [];
+    }
+
+    public function prepare(array $params) : self
+    {
+        $this->queryString = $this->createQueryString($params);
+        $this->headers = $this->createRequestHeaders();
+        return $this;
+    }
+
+    private function createQueryString(array $params):string
+    {
+        $queryArray = [
+            'frequency' => '1d',
+            'filter'=>'history',
+            'period1' => DateToTimeAdapter::toTime($params['start_date']),
+            'period2' => DateToTimeAdapter::toTime($params['end_date']),
+            'symbol' => $params['company_symbol']
+        ];
+        return http_build_query($queryArray,'','&');
+    }
+
+    private function createRequestHeaders(): array
+    {
+        $headersArray = [
+            'useQueryString'=>'true',
+            'x-rapidapi-key'=>$this->apiKey,
+            'x-rapidapi-host'=>$this->host,
+        ];
+
+        return $headersArray;
     }
 }

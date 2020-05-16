@@ -25,7 +25,7 @@ class NasdaqApiRequest implements ApiRequestContract
         $this->apiResponse = [];
     }
 
-    public function get(): self
+    public function get(): ApiRequestContract
     {
 
         if ($this->cache::has('company_symbols')) {
