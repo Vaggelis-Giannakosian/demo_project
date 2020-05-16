@@ -14,7 +14,7 @@
         <div class="col-sm-10 m-auto">
 
             <h2 class="text-center  mb-5 mt-5 ">
-                Historical quotes for {{ $company }} (Symbol {{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
+                Historical quotes for {{ $formData['company'] }} (Symbol {{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
             </h2>
 
 

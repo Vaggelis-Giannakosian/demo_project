@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\SearchSubmitted;
 use App\Http\Requests\DemoFormRequest;
 use App\Services\Requests\HistoryApiRequest;
 use App\Services\Requests\NasdaqApiRequest;
@@ -25,17 +26,21 @@ class FormController extends Controller
         $historyApiRequest->prepare($validatedData)->get();
 
 
-        $companyName = $nasdaqApiRequest->get()->companyNameBySymbol($validatedData['company_symbol']);
+        //get company name for symbol
+        $validatedData['company'] = $nasdaqApiRequest->get()->companyNameBySymbol($validatedData['company_symbol']);
+
+
+        //dispatch event
+        event( new SearchSubmitted($validatedData) );
 
 
         // return view
         return view('results_table',[
             'tableData'=>$historyApiRequest->getTableData(),
             'openClosedPricesGraphData'=>$historyApiRequest->getGraphData(),
-            'formData' => $validatedData,
-            'company' =>$companyName
+            'formData' => $validatedData
         ]);
-        //send Mail
+
     }
 
 }
