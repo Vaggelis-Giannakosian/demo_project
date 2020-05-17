@@ -9,7 +9,7 @@
 
 
 @section('content')
-    <div class="flex-center position-ref full-height">
+    <div class="flex-center position-ref full-height p-3">
         <div class="row">
 
             <h2 class="text-center w-100 mb-5">

@@ -10966,3 +10966,18 @@ body .select2-container--default .select2-selection--single .select2-selection__
 body .select2-container--default .select2-selection--single {
     height: 37px;
 }
+
+#results_paginate .pagination{
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 450px)
+{
+    h2{
+        font-size:24px;
+    }
+
+    h3{
+        font-size:20px;
+    }
+}

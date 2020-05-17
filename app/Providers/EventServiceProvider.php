@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\SearchSubmitted;
+use App\Events\SearchFormSubmitted;
 use App\Listeners\NotifyGuestForSearchSubmission;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SearchSubmitted::class=>[
+        SearchFormSubmitted::class=>[
             NotifyGuestForSearchSubmission::class,
         ],
     ];

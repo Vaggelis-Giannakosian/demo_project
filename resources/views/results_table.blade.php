@@ -11,7 +11,7 @@
     <div class="row">
 
 
-        <div class="col-sm-10 m-auto">
+        <div class="col-md-10 col-sm-12 m-auto p-5">
 
             <h2 class="text-center  mb-5 mt-5 ">
                 Historical quotes of {{ $formData['company'] }} ({{$formData['company_symbol']}}) for the period {{ $formData['start_date'] }} - {{ $formData['end_date'] }}
@@ -72,7 +72,7 @@
                 Open and Close prices chart for the same period
             </h2>
 
-            <div id="stock_div" class="w-100 mt-5" style="height: 400px;"></div><br>
+            <div id="stock_div" class="w-100 mt-5" ></div><br>
             <div class="w-100 mb-5 text-center" >
                 <button id="linear">Linear Scale</button>&nbsp;
                 <button id="log" disabled="true">Log Scale</button>
@@ -100,7 +100,9 @@
         $(document).ready(function() {
 
             //initialize datatable
-            $('#results').DataTable();
+            $('#results').DataTable({
+                scrollX:true
+            });
 
 
             //initialize stocks chart
