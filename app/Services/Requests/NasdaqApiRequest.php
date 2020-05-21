@@ -31,7 +31,10 @@ class NasdaqApiRequest implements ApiRequestContract
         if ($this->cache::has('company_symbols')) {
             $this->apiResponse = $this->cache::get('company_symbols');
         } else {
-            $this->apiResponse = $this->http::get($this->url)->json();
+            $this->apiResponse = $this->http::withOptions([
+                'verify' => false,
+              ])->get($this->url,['verify'=>false])
+                ->json();
             $this->cache::put('company_symbols',  $this->apiResponse, 600);
         }
 

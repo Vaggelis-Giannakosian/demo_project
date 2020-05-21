@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class HistoryApiRequest implements ApiRequestContract
 {
-    private $apiKey = 'ca36972eeamshff71fe5a5fd18fbp1e0659jsnaf99340b1541';
+    private $apiKey;
     private $host = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
     private $url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-historical-data?';
     private $apiResponse;
@@ -22,12 +22,18 @@ class HistoryApiRequest implements ApiRequestContract
     public function __construct( HTTP $http)
     {
         $this->http = $http;
+        $this->apiKey = env('HISTORY_API_KEY');
     }
 
 
     public function get(): ApiRequestContract
     {
-        $this->apiResponse = collect($this->http::withHeaders($this->headers)->get($this->url.$this->queryString)->json());
+        $this->apiResponse = collect($this->http::withOptions([
+            'verify' => false,
+           ])->withHeaders($this->headers)
+            ->get($this->url.$this->queryString)
+            ->json());
+
         return $this;
     }
 
@@ -39,6 +45,10 @@ class HistoryApiRequest implements ApiRequestContract
     public function getGraphData () : array
     {
         $graphData = [];
+
+        if(empty($this->apiResponse['prices']))
+            return $graphData;
+
         collect($this->apiResponse['prices'])->each(function($row) use (&$graphData){
             if(!isset($row['type']))
             {
