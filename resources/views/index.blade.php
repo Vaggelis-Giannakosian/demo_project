@@ -16,6 +16,11 @@
                 XM DEMO
             </h2>
 
+            @if(session()->has('status'))
+                <div class="alert alert-danger ml-auto mr-auto mb-3" role="alert">
+                    {{  session()->get('status')  }}
+                </div>
+            @endif
 
 
             <div class="col-sm-10 m-auto">

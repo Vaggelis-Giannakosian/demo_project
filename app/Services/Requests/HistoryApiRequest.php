@@ -37,9 +37,9 @@ class HistoryApiRequest implements ApiRequestContract
         return $this;
     }
 
-    public function getTableData() : array
+    public function getTableData() : ?array
     {
-        return $this->apiResponse['prices'] ?? [];
+        return $this->apiResponse['prices'] ?? null;
     }
 
     public function getGraphData () : array

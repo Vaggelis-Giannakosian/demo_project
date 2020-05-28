@@ -26,6 +26,12 @@ class FormController extends Controller
         //make Api Request
         $historyApiRequest->prepare($validatedData)->get();
 
+        //check for null api response and return to index
+        if(( $historyApiData = $historyApiRequest->getTableData() ) === null)
+            return redirect()
+                ->back()
+                ->withStatus('There was an unexpected error. Please try again');
+
         //get company name for symbol
         $validatedData['company'] = $nasdaqApiRequest->get()->getCompanyNameBySymbol($validatedData['company_symbol']);
 
@@ -34,7 +40,7 @@ class FormController extends Controller
 
         // return view
         return view('results_table',[
-            'tableData'=>$historyApiRequest->getTableData(),
+            'tableData'=>$historyApiData,
             'openClosedPricesGraphData'=>$historyApiRequest->getGraphData(),
             'formData' => $validatedData
         ]);
